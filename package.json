@@ -1,0 +1,26 @@
+{
+    "name": "qlik-tools",
+    "displayName": "Qlik Tools",
+    "description": "Qlik Tools",
+    "publisher": "InfoVizion",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "qlik",
+            "aliases": ["qlik", "qlik"],
+            "extensions": [".qvs"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "qlik",
+            "scopeName": "source.qvs",
+            "path": "./syntaxes/qlik.tmLanguage.json"
+        }]
+    }
+}

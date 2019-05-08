@@ -1,0 +1,4 @@
+mytable:
+LOAD * FROM qweqweqwe (QVD);
+
+LET app = Sum ({<ГодНедели, Сумма=['asdfasdf']>} Плфыва);

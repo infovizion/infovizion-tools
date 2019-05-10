@@ -56,13 +56,13 @@
           "begin": "\\(",
           "beginCaptures": {
             "0": {
-              "name": "support.constant.qvs"
+              "name": "keyword.other.qvs"
             }
           },
           "end": "\\)",
           "endCaptures": {
             "0": {
-              "name": "support.constant.qvs"
+              "name": "keyword.other.qvs"
             }
           },
           "patterns": [
@@ -77,6 +77,9 @@
             },
             {
               "include": "#braces"
+            },
+            {
+              "include": "#operators"
             },
             {
               "include": "#strings"
@@ -364,5 +367,3 @@
     }
   }
 }
-
-CLINK C:\aproject\github\qlik-tools>CLINK C:\aproject\github\qlik-tools>CLINK C:\aproject\github\qlik-tools>CLINK C:\aproject\github\qlik-tools>CLINK C:\aproject\github\qlik-tools>CLINK C:\aproject\github\qlik-tools>

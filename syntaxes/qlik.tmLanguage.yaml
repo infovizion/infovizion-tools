@@ -39,15 +39,16 @@ repository:
     patterns:
     - begin: \(
       beginCaptures:
-        '0': {name: support.constant.qvs}
+        '0': {name: keyword.other.qvs}
       end: \)
       endCaptures:
-        '0': {name: support.constant.qvs}
+        '0': {name: keyword.other.qvs}
       patterns:
       - include: '#fileQualifiers'
       - include: '#functions'
       - include: '#variables'
       - include: '#braces'
+      - include: '#operators'
       - include: '#strings'
       - include: '#numericLiterals'
 

@@ -22,7 +22,7 @@
             "id": "qlik-expressions",
             "aliases": ["qlik-expressions", "qlik-expressions"],
             "extensions": [".qlikview-vars"],
-            "configuration": "./language-configuration.json"
+            "configuration": "./expression.language-configuration.json"
         }
         
         ],

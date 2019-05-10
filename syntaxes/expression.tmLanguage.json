@@ -1,0 +1,138 @@
+{
+  "name": "Qlik expression files (InfoVizion format)",
+  "fileTypes": [
+    "qlikview-vars"
+  ],
+  "scopeName": "source.qlik-expressions",
+  "uuid": "6b77dc03-7003-41f4-a9f6-287849f88d5f",
+  "patterns": [
+    {
+      "include": "#expressionName"
+    },
+    {
+      "include": "#section"
+    },
+    {
+      "include": "#newDocument"
+    },
+    {
+      "include": "#expression"
+    },
+    {
+      "include": "#tag"
+    },
+    {
+      "include": "#longTag"
+    },
+    {
+      "include": "#comment"
+    }
+  ],
+  "repository": {
+    "expression": {
+      "patterns": [
+        {
+          "name": "meta.expression.qlik-expressions",
+          "begin": "^(definition):",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.name.tag.qlik-expressions"
+            }
+          },
+          "end": "^(?=\\S)",
+          "endCaptures": {
+            "0": {
+              "name": "support.constant.qlik-expressions"
+            }
+          },
+          "patterns": [
+            {
+              "include": "source.qvs"
+            }
+          ]
+        }
+      ]
+    },
+    "longTag": {
+      "patterns": [
+        {
+          "name": "string.other.qlik-expressions",
+          "begin": "^(description|comment):",
+          "beginCaptures": {
+            "0": {
+              "name": "entity.name.tag.qlik-expressions"
+            }
+          },
+          "end": "^(?=\\S)",
+          "endCaptures": {
+            "0": {
+              "name": "support.constant.qlik-expressions"
+            }
+          }
+        }
+      ]
+    },
+    "expressionName": {
+      "patterns": [
+        {
+          "match": "^\\s*(set|let|name|family|type):\\s*(\\w[\\w_.]+)\\s*$",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.qlik-expressions"
+            },
+            "2": {
+              "name": "entity.name.type.expression.qlik-expressions"
+            }
+          }
+        }
+      ]
+    },
+    "tag": {
+      "patterns": [
+        {
+          "name": "meta.tag.qlik-expressions",
+          "match": "(label|selectorLabel|format):(.*)",
+          "captures": {
+            "1": {
+              "name": "entity.name.tag.qlik-expressions"
+            },
+            "2": {
+              "name": "string.unquoted.plain.out"
+            }
+          }
+        }
+      ]
+    },
+    "newDocument": {
+      "patterns": [
+        {
+          "name": "keyword.control.qlik-expressions",
+          "match": "^---$"
+        }
+      ]
+    },
+    "section": {
+      "patterns": [
+        {
+          "match": "^(#SECTION )\\s*(.+)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.double-dash.qlik-expressions"
+            },
+            "2": {
+              "name": "support.variable.qlik-expressions meta.name.section.qlik-expressions"
+            }
+          }
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.qlik-expressions",
+          "match": "^# .*"
+        }
+      ]
+    }
+  }
+}

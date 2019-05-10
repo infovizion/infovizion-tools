@@ -12,33 +12,17 @@ patterns:
 
 - include: '#section'
 
-- include: '#yamlNewDocument'
+- include: '#newDocument'
 
 - include: '#expression'
 
-# - include: '#expressionWithEqualSign'
-
-# - include: '#expressionWithoutEqualSign'
-
-# - include: '#simpleField'
-
-# - include: '#def'
-
 - include: '#tag'
 
-repository:
-  # def:
-  #   patterns:
-  #   - name: meta.expression.qlik-expressions
-  #     begin: ^#define\s+
-  #     beginCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
-  #     end: ^(?=\S)
-  #     endCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
-  #     patterns:
-  #     - include: source.qvs
+- include: '#longTag'
 
+- include: '#comment'
+
+repository:
   expression:
     patterns:
     - name: meta.expression.qlik-expressions
@@ -50,48 +34,30 @@ repository:
         '0': {name: support.constant.qlik-expressions}
       patterns:
       - include: source.qvs
-
-  # expressionWithEqualSign:
-  #   patterns:
-  #   - name: meta.expression.qlik-expressions
-  #     begin: ^(label|comment):\s*(?==)
-  #     beginCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
-  #     end: ^(?=\S)
-  #     endCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
-  #     patterns:
-  #     - include: source.qvs
-
-  # expressionWithoutEqualSign:
-  #   patterns:
-  #   - name: string.single.quoted.qlik-expressions
-  #     begin: '^(label|comment):'
-  #     beginCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
-  #     end: ^(?=\S)
-  #     endCaptures:
-  #       '0': {name: support.constant.qlik-expressions}
+  longTag:
+    patterns:
+    - name: string.other.qlik-expressions
+      begin: '^(description|comment):'
+      beginCaptures:
+        '0': {name: entity.name.tag.qlik-expressions}
+      end: ^(?=\S)
+      endCaptures:
+        '0': {name: support.constant.qlik-expressions}
   expressionName:
     patterns:
-    - match: ^\s*(set|let):\s*(\w[\w_.]+)\s*$
+    - match: ^\s*(set|let|name|family|type):\s*(\w[\w_.]+)\s*$
       captures:
         '1': {name: entity.name.tag.qlik-expressions}
-        '2': {name: support.variable.qlik-expressions entity.name.type.expression.qlik-expressions}
+        '2': {name: entity.name.type.expression.qlik-expressions}
   tag:
     patterns:
     - name: meta.tag.qlik-expressions
-      match: (label|family|type|selectorLabel|format):(.*)
+      match: (label|selectorLabel|format):(.*)
       captures:
         '1': {name: entity.name.tag.qlik-expressions}
         '2': {name: string.unquoted.plain.out}
 
-  # simpleField:
-  #   patterns:
-  #   - name: support.constant.qlik-expressions
-  #     match: (^(\s)*(tag|description):(\s)*)
-
-  yamlNewDocument:
+  newDocument:
     patterns:
     - name: keyword.control.qlik-expressions
       match: ^---$
@@ -101,3 +67,7 @@ repository:
       captures:
         '1': {name: comment.line.double-dash.qlik-expressions}
         '2': {name: support.variable.qlik-expressions meta.name.section.qlik-expressions}
+  comment:
+    patterns:
+    - name: comment.line.double-slash.qlik-expressions
+      match: ^# .*

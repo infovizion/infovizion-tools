@@ -7,35 +7,136 @@
     "engines": {
         "vscode": "^1.33.0"
     },
-    "repository": {"type": "git", "url": "https://github.com/vadimtsushko/qlikcode.git"},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vadimtsushko/qlikcode.git"
+    },
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "onCommand:qlik-tools.qvd_preview",
+        "onCommand:qlik-tools.expressions_to_json"
+    ],
+    "main": "./dist/extension.js",
     "contributes": {
-        "languages": [{
-            "id": "qlik",
-            "aliases": ["qlik", "qlik"],
-            "extensions": [".qvs"],
-            "configuration": "./language-configuration.json"
-        },
-        {
-            "id": "qlik-expressions",
-            "aliases": ["qlik-expressions", "qlik-expressions"],
-            "extensions": [".qlikview-vars"],
-            "configuration": "./expression.language-configuration.json"
-        }
-        
+        "commands": [
+            {
+                "command": "qlik-tools.qvd_preview",
+                "title": "Preview a QVD file",
+                "category": "Infovizion"
+            },
+            {
+                "command": "qlik-tools.expressions_to_json",
+                "title": "Convert Expressions file to Json",
+                "category": "Infovizion"
+            }
         ],
-        "grammars": [{
-            "language": "qlik",
-            "scopeName": "source.qvs",
-            "path": "./syntaxes/qlik.tmLanguage.json"
+        "menus": {
+            "explorer/context": [
+                {
+                    "when": "resourceLangId == qvd",
+                    "command": "qlik-tools.qvd_preview",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "qlik-tools.expressions_to_json",
+                    "group": "build"
+                }
+            ],
+            "commandPalette": [
+                {
+                    "command": "qlik-tools.expressions_to_json",
+                    "when": "editorLangId == qlik-expressions"
+                },
+                {
+                    "command": "qlik-tools.qvd_preview",
+                    "when": "false"
+                }
+            ]
         },
-        {
-            "language": "qlik-expressions",
-            "scopeName": "source.qlik-expressions",
-            "path": "./syntaxes/expression.tmLanguage.json"
-        }
-    ]
+        "languages": [
+            {
+                "id": "qlik",
+                "aliases": [
+                    "qlik",
+                    "qlik"
+                ],
+                "extensions": [
+                    ".qvs"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "qlik-expressions",
+                "aliases": [
+                    "qlik-expressions",
+                    "qlik-expressions"
+                ],
+                "extensions": [
+                    ".qlikview-vars"
+                ],
+                "configuration": "./expression.language-configuration.json"
+            },
+            {
+                "id": "qvd",
+                "extensions": [
+                    ".qvd"
+                ]
+            }
+        ],
+        "problemMatchers": [
+            {
+                "name": "qlik-expressions",
+                "owner": "qlik-expressions",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^>>>>> (WARNING|ERROR). File: \"([^\"]+)\", line: (\\d+) col: (\\d+) message: (.*)$",
+                    "severity": 1,
+                    "file": 2,
+                    "line": 3,
+                    "column": 4,
+                    "message": 5
+                }
+            }
+        ],
+        "taskDefinitions": [
+            {
+                "type": "infovizion",
+                "required": []
+            }
+        ],
+        "grammars": [
+            {
+                "language": "qlik",
+                "scopeName": "source.qvs",
+                "path": "./syntaxes/qlik.tmLanguage.json"
+            },
+            {
+                "language": "qlik-expressions",
+                "scopeName": "source.qlik-expressions",
+                "path": "./syntaxes/expression.tmLanguage.json"
+            }
+        ]
+    },
+    "scripts": {
+        "compile": "tsc -b",
+        "watch": "tsc -b -w",
+        "vscode:prepublish": "webpack --mode production",
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch",
+        "test-compile": "tsc -p ./",
+        "lint": "tslint -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^7.0.43",
+        "@types/vscode": "^1.32.0",
+        "ts-loader": "^4.4.2",
+        "tslint": "^5.16.0",
+        "typescript": "^3.5.1",
+        "webpack": "^4.31.0",
+        "webpack-cli": "^3.3.0"
     }
 }

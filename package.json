@@ -27,6 +27,11 @@
                 "category": "Infovizion"
             },
             {
+                "command": "qlik-tools.expressions_migrate",
+                "title": "Mirgate expression file to new format (App.variables)",
+                "category": "Infovizion"
+            },
+            {
                 "command": "qlik-tools.expressions_to_json",
                 "title": "Convert Expressions file to Json",
                 "category": "Infovizion"
@@ -46,6 +51,11 @@
                 }
             ],
             "editor/context": [
+                {
+                    "command": "qlik-tools.expressions_migrate",
+                    "when": "resourceFilename == App.Variables.qlikview-vars",
+                    "group": "build"
+                },
                 {
                     "command": "qlik-tools.expressions_to_json",
                     "when": "editorLangId == qlik-expressions",
@@ -67,7 +77,6 @@
             {
                 "id": "qlik",
                 "aliases": [
-                    "qlik",
                     "qlik"
                 ],
                 "extensions": [
@@ -78,11 +87,10 @@
             {
                 "id": "qlik-expressions",
                 "aliases": [
-                    "qlik-expressions",
                     "qlik-expressions"
                 ],
                 "extensions": [
-                    ".qlikview-vars"
+                    ".qlikview-vars","variables"
                 ],
                 "configuration": "./expression.language-configuration.json"
             },
@@ -97,13 +105,13 @@
             {
                 "name": "qlik-expressions",
                 "owner": "qlik-expressions",
-                "fileLocation": "absolute",
+                "fileLocation": "relative",
                 "pattern": {
-                    "regexp": "^>>>>> (WARNING|ERROR). File: \"([^\"]+)\", line: (\\d+) col: (\\d+) message: (.*)$",
-                    "severity": 1,
-                    "file": 2,
-                    "line": 3,
-                    "column": 4,
+                    "regexp": "line (\\d+), column (\\d+) of (\\S+): (ERROR|WARNING). (.*)$",
+                    "severity": 5,
+                    "file": 3,
+                    "line": 1,
+                    "column": 2,
                     "message": 5
                 }
             }

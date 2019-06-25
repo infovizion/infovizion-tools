@@ -1,7 +1,8 @@
 {
   "name": "Qlik expression files (InfoVizion format)",
   "fileTypes": [
-    "qlikview-vars"
+    "qlikview-vars",
+    "variables"
   ],
   "scopeName": "source.qlik-expressions",
   "uuid": "6b77dc03-7003-41f4-a9f6-287849f88d5f",

@@ -7,54 +7,44 @@ import * as fs from 'fs';
 import * as cp from 'child_process';
 import * as vscode from 'vscode';
 
+let kind: InfovizoinTaskDefinition = {
+	type: 'shell'
+};
 let taskProvider: vscode.Disposable | undefined;
 
 export function activate(_context: vscode.ExtensionContext): void {
-	// let workspaceRoot = vscode.workspace.rootPath;
-	// if (!workspaceRoot) {
-	// 	return;
-	// }
-	// let pattern = path.join(workspaceRoot, 'Rakefile');
-	// let rakePromise: Thenable<vscode.Task[]> | undefined = undefined;
-	// let fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
-	// fileWatcher.onDidChange(() => rakePromise = undefined);
-	// fileWatcher.onDidCreate(() => rakePromise = undefined);
-	// fileWatcher.o	console.log('Congratulations, your extension "Infovizion" is now active!');nDidDelete(() => rakePromise = undefined);
 	console.log('Congratulations, your extension "Infovizion" is now active!');
-	let kind: InfovizoinTaskDefinition = {
-		type: 'process'
-	};
-	// taskProvider = vscode.tasks.registerTaskProvider('infovizion', {
-	// 	provideTasks: () => {
-	// 		// if (!rakePromise) {
-	// 		// 	rakePromise = getRakeTasks();
-	// 		// }
-	// 		return [convert2JsonTask];
-	// 	},
-	// 	resolveTask(_task: vscode.Task): vscode.Task | undefined {
-	// 		return undefined;
-	// 	}
-	// });
-	let qvdPreview = vscode.commands.registerCommand('qlik-tools.qvd_preview', previewQvd);
-	_context.subscriptions.push(qvdPreview);
-	let convert2JsonCommand = vscode.commands.registerCommand('qlik-tools.expressions_to_json', () => {
-		let textEditor = vscode.window.activeTextEditor;
-		if (textEditor === undefined) {
-			return;
-		}
-		let filePath = textEditor.document.fileName;
-		console.log(filePath);
-		let convert2JsonTask = new vscode.Task(kind, 'Qlik Expression. Convert to JSON', 'qlik-expression', new vscode.ProcessExecution('inqlik.bat', ['expression', 'convert-to-json', filePath]),
-			'$qlik-expressions');
-		vscode.tasks.executeTask(convert2JsonTask);
+	_registerCommand(_context, 'qlik-tools.qvd_preview', previewQvd);
+	_registerCommand(_context, 'qlik-tools.expressions_to_json', () => {	
+		inqlikEditorTask( ['expression', 'convert-to-json'],'Qlik Expression. Convert to JSON');
 	});
-	_context.subscriptions.push(convert2JsonCommand);
+	_registerCommand(_context, 'qlik-tools.expressions_migrate', () => {	
+		inqlikEditorTask( ['expression', 'migrate'],'Qlik Expression. Migrate file to new format (App.variables)');
+	});
 }
 
 export function deactivate(): void {
 	if (taskProvider) {
 		taskProvider.dispose();
 	}
+}
+function inqlikEditorTask(args: string[], description: string) {
+	console.log(args);
+	let textEditor = vscode.window.activeTextEditor;
+	if (textEditor === undefined) {
+		return;
+	}
+	let filePath = textEditor.document.fileName;
+	args.push(filePath);
+	let task = new vscode.Task(kind, description, 'qlik-expression', new vscode.ShellExecution('inqlik', args),
+		'$qlik-expressions');
+	vscode.tasks.executeTask(task);
+
+}
+function _registerCommand(_context: vscode.ExtensionContext, commandId: string, callback: (...args: any[]) => any, thisArg?: any) {
+	let command = vscode.commands.registerCommand(commandId, callback);
+	_context.subscriptions.push(command);
+
 }
 function previewQvd(file: vscode.Uri) {
 	const title = file.path.split('/').pop() + '';

@@ -1,6 +1,6 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: Qlik expression files (InfoVizion format)
-fileTypes: [qlikview-vars]
+fileTypes: [qlikview-vars, variables]
 
 scopeName: source.qlik-expressions
 

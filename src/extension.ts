@@ -60,7 +60,7 @@ function previewQvd(file: vscode.Uri) {
 	if (filePath.startsWith('/')) {
 		filePath = filePath.substring(1);
 	}
-	let commandLine = `inqlik.bat qvd --format html ${filePath}`;
+	let commandLine = `inqlik qvd --format html ${filePath}`;
 	console.log(commandLine);
 	let content = cp.execSync(commandLine, { encoding: 'utf8' });
 	console.log(content);
@@ -114,7 +114,7 @@ async function getInfovizionTasks(): Promise<vscode.Task[]> {
 		type: 'process'
 	};
 
-	let task = new vscode.Task(kind, 'Qlik Expression. Convert to JSON', 'qlik-expression', new vscode.ProcessExecution('inqlik.bat', ['expression convert-to-json', '$file']),
+	let task = new vscode.Task(kind, 'Qlik Expression. Convert to JSON', 'qlik-expression', new vscode.ProcessExecution('inqlik', ['expression convert-to-json', '$file']),
 		'$qlik-expressions');
 	return result;
 }

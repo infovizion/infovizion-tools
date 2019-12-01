@@ -3,7 +3,7 @@
     "displayName": "Qlik Tools",
     "description": "Qlik Tools",
     "publisher": "InfoVizion",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "engines": {
         "vscode": "^1.33.0"
     },
@@ -37,11 +37,13 @@
                 "category": "Infovizion"
             }
         ],
-        "keybindings": [{
-                    "command": "qlik-tools.expressions_to_json",
-                    "when": "editorLangId == qlik-expressions",
-            "key": "f5"
-        }],
+        "keybindings": [
+            {
+                "command": "qlik-tools.expressions_to_json",
+                "when": "editorLangId == qlik-expressions",
+                "key": "f5"
+            }
+        ],
         "menus": {
             "explorer/context": [
                 {
@@ -90,7 +92,8 @@
                     "qlik-expressions"
                 ],
                 "extensions": [
-                    ".qlikview-vars","variables"
+                    ".qlikview-vars",
+                    "variables"
                 ],
                 "configuration": "./expression.language-configuration.json"
             },
@@ -147,6 +150,7 @@
     "devDependencies": {
         "@types/node": "^7.0.43",
         "@types/vscode": "^1.32.0",
+        "js-yaml": "^3.13.1",
         "ts-loader": "^4.4.2",
         "tslint": "^5.16.0",
         "typescript": "^3.5.1",

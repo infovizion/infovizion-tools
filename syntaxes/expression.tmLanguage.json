@@ -11,6 +11,9 @@
       "include": "#expressionName"
     },
     {
+      "include": "#pragma"
+    },
+    {
       "include": "#section"
     },
     {
@@ -109,6 +112,14 @@
         {
           "name": "keyword.control.qlik-expressions",
           "match": "^---$"
+        }
+      ]
+    },
+    "pragma": {
+      "patterns": [
+        {
+          "name": "keyword.control.qlik-expressions",
+          "match": "^pragma: skipError$"
         }
       ]
     },

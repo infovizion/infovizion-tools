@@ -9,6 +9,7 @@ uuid: 6b77dc03-7003-41f4-a9f6-287849f88d5f
 patterns:
 
 - include: '#expressionName'
+- include: '#pragma'
 
 - include: '#section'
 
@@ -61,6 +62,10 @@ repository:
     patterns:
     - name: keyword.control.qlik-expressions
       match: ^---$
+  pragma:
+    patterns:
+    - name: keyword.control.qlik-expressions
+      match: '^pragma: skipError$'
   section:
     patterns:
     - match: ^(#SECTION )\s*(.+)$

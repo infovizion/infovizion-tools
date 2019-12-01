@@ -5,7 +5,7 @@
     "publisher": "InfoVizion",
     "version": "0.0.4",
     "engines": {
-        "vscode": "^1.33.0"
+        "vscode": "^1.40.0"
     },
     "repository": {
         "type": "git",
@@ -148,13 +148,13 @@
         "lint": "tslint -p ./"
     },
     "devDependencies": {
-        "@types/node": "^7.0.43",
-        "@types/vscode": "^1.32.0",
+        "@types/node": "^12.12.14",
+        "@types/vscode": "^1.40.0",
         "js-yaml": "^3.13.1",
-        "ts-loader": "^4.4.2",
-        "tslint": "^5.16.0",
-        "typescript": "^3.5.1",
-        "webpack": "^4.31.0",
-        "webpack-cli": "^3.3.0"
+        "ts-loader": "^6.2.1",
+        "tslint": "^5.20.1",
+        "typescript": "^3.7.2",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.10"
     }
 }

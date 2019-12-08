@@ -1,7 +1,3 @@
-# infovizion-tools README
+# InfoVizion tools
 
-Qlik Tools
-
-## Features
-
-Syntax for QLik Load Scripts and Expressions files
+Set of developement tools used in InfoVizion for Qlik projects

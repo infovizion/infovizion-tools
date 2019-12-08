@@ -1,9 +1,9 @@
 {
-    "name": "qlik-tools",
-    "displayName": "Qlik Tools",
-    "description": "Qlik Tools",
+    "name": "infovizion-tools",
+    "displayName": "infoVizion Tools",
+    "description": "Set of development tools used in InfoVizion for Qlik projects",
     "publisher": "InfoVizion",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "engines": {
         "vscode": "^1.40.0"
     },
@@ -15,32 +15,49 @@
         "Programming Languages"
     ],
     "activationEvents": [
-        "onCommand:qlik-tools.qvd_preview",
-        "onCommand:qlik-tools.expressions_to_json"
+        "onCommand:infovizion-tools.qvd_preview",
+        "onCommand:infovizion-tools.qvs_check",
+        "onCommand:infovizion-tools.qvs_check_and_reload",
+        "onCommand:infovizion-tools.expressions_to_json"
     ],
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "qlik-tools.qvd_preview",
+                "command": "infovizion-tools.qvd_preview",
                 "title": "Preview a QVD file",
                 "category": "Infovizion"
             },
             {
-                "command": "qlik-tools.expressions_migrate",
+                "command": "infovizion-tools.expressions_migrate",
                 "title": "Mirgate expression file to new format (App.variables)",
                 "category": "Infovizion"
             },
             {
-                "command": "qlik-tools.expressions_to_json",
+                "command": "infovizion-tools.expressions_to_json",
                 "title": "Convert Expressions file to Json",
+                "category": "Infovizion"
+            },
+            {
+                "command": "infovizion-tools.qvs_check_and_reload",
+                "title": "Check and reload Qlik load script",
+                "category": "Infovizion"
+            },
+            {
+                "command": "infovizion-tools.qvs_check",
+                "title": "Check Qlik load script",
                 "category": "Infovizion"
             }
         ],
         "keybindings": [
             {
-                "command": "qlik-tools.expressions_to_json",
+                "command": "infovizion-tools.expressions_to_json",
                 "when": "editorLangId == qlik-expressions",
+                "key": "f5"
+            },
+            {
+                "command": "infovizion-tools.qvs_check_and_reload",
+                "when": "editorLangId == qlik",
                 "key": "f5"
             }
         ],
@@ -48,29 +65,39 @@
             "explorer/context": [
                 {
                     "when": "resourceLangId == qvd",
-                    "command": "qlik-tools.qvd_preview",
+                    "command": "infovizion-tools.qvd_preview",
                     "group": "navigation"
                 }
             ],
             "editor/context": [
                 {
-                    "command": "qlik-tools.expressions_migrate",
+                    "command": "infovizion-tools.expressions_migrate",
                     "when": "resourceFilename == App.Variables.qlikview-vars",
                     "group": "build"
                 },
                 {
-                    "command": "qlik-tools.expressions_to_json",
+                    "command": "infovizion-tools.expressions_to_json",
                     "when": "editorLangId == qlik-expressions",
+                    "group": "build"
+                },
+                {
+                    "command": "infovizion-tools.qvs_check_and_reload",
+                    "when": "editorLangId == qlik",
+                    "group": "build"
+                },
+                {
+                    "command": "infovizion-tools.qvs_check",
+                    "when": "editorLangId == qlik",
                     "group": "build"
                 }
             ],
             "commandPalette": [
                 {
-                    "command": "qlik-tools.expressions_to_json",
+                    "command": "infovizion-tools.expressions_to_json",
                     "when": "editorLangId == qlik-expressions"
                 },
                 {
-                    "command": "qlik-tools.qvd_preview",
+                    "command": "infovizion-tools.qvd_preview",
                     "when": "false"
                 }
             ]
@@ -116,6 +143,18 @@
                     "line": 1,
                     "column": 2,
                     "message": 5
+                }
+            },
+            {
+                "name": "qlik",
+                "owner": "qlik",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^>* Parse error. File: \"(...*?)\", line: ([0-9]*) col: ([0-9]*) message: (.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4
                 }
             }
         ],

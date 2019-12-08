@@ -1,4 +1,4 @@
-# qlik-tools README
+# infovizion-tools README
 
 Qlik Tools
 

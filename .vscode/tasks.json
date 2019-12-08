@@ -9,6 +9,14 @@
             "problemMatcher": [
                 "$go"
             ]
+        },
+        {
+            "type": "npm",
+            "script": "compile",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build"
         }
     ]
 }

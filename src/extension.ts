@@ -14,12 +14,18 @@ let taskProvider: vscode.Disposable | undefined;
 
 export function activate(_context: vscode.ExtensionContext): void {
 	console.log('Congratulations, your extension "Infovizion" is now active!');
-	_registerCommand(_context, 'qlik-tools.qvd_preview', previewQvd);
-	_registerCommand(_context, 'qlik-tools.expressions_to_json', () => {	
+	_registerCommand(_context, 'infovizion-tools.qvd_preview', previewQvd);
+	_registerCommand(_context, 'infovizion-tools.expressions_to_json', () => {	
 		inqlikEditorTask( ['expression', 'convert-to-json'],'Qlik Expression. Convert to JSON');
 	});
-	_registerCommand(_context, 'qlik-tools.expressions_migrate', () => {	
+	_registerCommand(_context, 'infovizion-tools.expressions_migrate', () => {	
 		inqlikEditorTask( ['expression', 'migrate'],'Qlik Expression. Migrate file to new format (App.variables)');
+	});
+	_registerCommand(_context, 'infovizion-tools.qvs_check', () => {	
+		qvsEditoTask( ['qvs', '--command', 'check'],'Check Qlik load script for errors');
+	});
+	_registerCommand(_context, 'infovizion-tools.qvs_check_and_reload', () => {	
+		qvsEditoTask( ['qvs', '--command', 'check_and_reload'],'Check script for errors and run reload task on success');
 	});
 }
 
@@ -29,22 +35,30 @@ export function deactivate(): void {
 	}
 }
 function inqlikEditorTask(args: string[], description: string) {
-	console.log(args);
 	let textEditor = vscode.window.activeTextEditor;
 	if (textEditor === undefined) {
 		return;
 	}
 	let filePath = textEditor.document.fileName;
 	args.push(filePath);
-	let task = new vscode.Task(kind, description, 'qlik-expression', new vscode.ShellExecution('inqlik', args),
+	let task = new vscode.Task(kind, description, 'qlik-expressions', new vscode.ShellExecution('ivtool', args),
 		'$qlik-expressions');
 	vscode.tasks.executeTask(task);
-
+}
+function qvsEditoTask(args: string[], description: string) {
+	let textEditor = vscode.window.activeTextEditor;
+	if (textEditor === undefined) {
+		return;
+	}
+	let filePath = textEditor.document.fileName;
+	args.push(filePath);
+	let task = new vscode.Task(kind, description, 'qvs', new vscode.ShellExecution('ivtool', args),
+		'$qlik');
+	vscode.tasks.executeTask(task);
 }
 function _registerCommand(_context: vscode.ExtensionContext, commandId: string, callback: (...args: any[]) => any, thisArg?: any) {
 	let command = vscode.commands.registerCommand(commandId, callback);
 	_context.subscriptions.push(command);
-
 }
 function previewQvd(file: vscode.Uri) {
 	const title = file.path.split('/').pop() + '';
@@ -60,7 +74,7 @@ function previewQvd(file: vscode.Uri) {
 	if (filePath.startsWith('/')) {
 		filePath = filePath.substring(1);
 	}
-	let commandLine = `inqlik qvd --format html ${filePath}`;
+	let commandLine = `ivtool qvd --format html ${filePath}`;
 	console.log(commandLine);
 	let content = cp.execSync(commandLine, { encoding: 'utf8' });
 	console.log(content);
